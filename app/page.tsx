@@ -1,69 +1,52 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight, ArrowRight, Check, Sprout, ShieldCheck, PackageCheck, Ship, MapPin, Globe2, FileCheck2, Microscope, Wheat, MoveDown, Handshake } from "lucide-react";
+import { Reveal, Photo, QuoteForm, ContactDetails } from "./ui";
+import { HeroSlideshow } from "./hero-slideshow";
+import { products, images } from "./site-data";
+
+const strengths = [
+  { icon: Sprout, title: "Rooted in Pakistan", text: "Carefully sourced sesame seeds and maize, with local supply knowledge and a clear focus on origin." },
+  { icon: ShieldCheck, title: "Quality, made clear", text: "Agreed specifications, samples on request, and inspection coordination before your shipment." },
+  { icon: Ship, title: "Prepared for the world", text: "Flexible packing and practical export support from our Karachi base to your destination port." },
+];
+const assurances=[{icon:Sprout,label:"Pakistan-origin products"},{icon:ShieldCheck,label:"Clear product specifications"},{icon:PackageCheck,label:"Flexible export packing"},{icon:Globe2,label:"International inquiries welcome"}];
+const steps=[{icon:FileCheck2,title:"Understand your requirements",text:"Confirm the product, intended market and agreed quality parameters."},{icon:Sprout,title:"Source & prepare",text:"Coordinate sourcing, cleaning, drying and sorting as applicable."},{icon:Microscope,title:"Review & verify",text:"Arrange samples and mutually agreed third-party inspection when required."},{icon:PackageCheck,title:"Pack & ship",text:"Coordinate packing, loading and transaction-specific export documents."}];
+const faqs = [
+  ["Where are your products sourced?", "Our Natural Sesame Seeds and Yellow Corn / Maize are sourced from Pakistan through local agricultural and commodity supply channels. Crop information and current availability can be discussed before ordering."],
+  ["Can I request a sample before ordering?", "Yes. Samples can be arranged upon request, subject to product availability, courier arrangements and commercial requirements. Include your product and destination in your inquiry."],
+  ["Can you meet our specifications and packing requirements?", "Final specifications can be discussed according to buyer requirements, crop availability and destination-country regulations. Standard packing is 25 kg or 50 kg PP bags. Buyer-specific packing and bulk maize can be discussed where commercially suitable."],
+  ["How much fits in a 20ft container?", "Indicative loading is 18–20 MT for Natural Sesame Seeds and 22–24 MT for Yellow Corn / Maize. Actual loading depends on packing, product density, payload limits and shipping-line requirements."],
+  ["Can you coordinate inspection and export documents?", "Third-party inspection can be coordinated when requested and mutually agreed. The scope and cost should be confirmed before shipment. Export documentation is arranged according to the transaction and destination requirements."],
+  ["Which shipment terms can you quote?", "FOB, CFR and CIF can be discussed based on your destination and commercial agreement. Final freight and shipment arrangements depend on the port, carrier availability and prevailing logistics conditions."],
+];
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+  return <main id="main-content">
+    <section className="hero">
+      <HeroSlideshow />
+      <div className="hero-shade" />
+      <div className="container hero-inner">
+        <div className="eyebrow light"><span className="tiny-line" /> PAKISTAN ORIGIN. GLOBAL POSSIBILITIES.</div>
+        <h1>Goodness from our soil.<br /><em>Possibilities for<br className="desktop-break" /> your business.</em></h1>
+        <p>Premium Natural Sesame Seeds and Yellow Corn.<br />Carefully sourced in Pakistan. Ready for your market.</p>
+        <div className="actions"><a className="button gold" href="#products">Explore our products <ArrowUpRight size={18} /></a><a className="button glass" href="#quote">Request a quote <ArrowRight size={18} /></a></div>
+        <div className="hero-origin"><Sprout size={31} strokeWidth={1.3} /><span>FROM PAKISTAN<br /><strong>With care, at every step.</strong></span></div>
+        <div className="hero-bottom"><span><MapPin size={15} /> KARACHI, PAKISTAN</span><a href="#about" aria-label="Discover AKM Enterprises"><MoveDown size={20} /></a></div>
+      </div>
+    </section>
+    <div className="assurance-bar"><div className="container assurances">{assurances.map(({icon:Icon,label})=><div key={label}><Icon size={23} strokeWidth={1.4}/><span>{label}</span></div>)}</div></div>
+    <section className="section container about-grid" id="about">
+      <Reveal className="about-visual"><Photo src={images.sesame} alt="Close-up texture of natural sesame seeds" className="about-main" /><Photo src={images.corn} alt="Golden yellow corn kernels" className="about-inset" /><div className="origin-seal"><Sprout size={28}/><strong>PAKISTAN</strong><span>GROWN WITH POSSIBILITY</span></div><div className="image-caption">NATURAL PRODUCTS. THOUGHTFUL SOURCING.</div></Reveal>
+      <Reveal className="about-copy"><div className="eyebrow"><span className="tiny-line"/> WELCOME TO AKM ENTERPRISES</div><h2>Connecting our harvest<br />to <em>your next opportunity.</em></h2><p>Great trade begins with a reliable source. Based in Karachi, AKM Enterprises connects Pakistan’s agricultural supply with international importers, wholesalers and processors.</p><p>Our focus is simple: quality Natural Sesame Seeds and Yellow Corn / Maize, transparent specifications, and dependable support from your first inquiry through shipment.</p><div className="about-points"><span><Check/> Quality-focused sourcing</span><span><Check/> Buyer-specific packing</span><span><Check/> Clear communication</span><span><Check/> Export coordination</span></div><a href="#quality" className="text-link">Discover our approach <ArrowUpRight size={18}/></a></Reveal>
+    </section>
+    <section className="section products-section" id="products"><div className="container"><Reveal className="section-heading split-heading"><div><div className="eyebrow"><span className="tiny-line"/> OUR CORE PRODUCTS</div><h2>Two products.<br /><em>One commitment to quality.</em></h2></div><p>Focused expertise. Clear specifications.<br />Agricultural commodities prepared around<br className="desktop-break"/> your business requirements.</p></Reveal><div className="product-grid">{products.map((product,index)=><Reveal key={product.slug} className="product-card" delay={index*.1}><Link href={`/products/${product.slug}`} className="product-image-link"><Photo src={product.image} alt={product.imageAlt}/><span className="product-tag"><Sprout size={13}/> PAKISTAN ORIGIN</span><span className="round-arrow"><ArrowUpRight/></span></Link><div className="product-content"><span className="product-number">0{index+1} / OUR SELECTION</span><h3><Link href={`/products/${product.slug}`}>{product.name}</Link></h3><p>{product.short}</p><div className="product-specs">{product.highlights.map(([value,label])=><div key={label}><strong>{value}</strong><span>{label}</span></div>)}</div><Link className="text-link" href={`/products/${product.slug}`}>Explore product & specifications <ArrowUpRight size={18}/></Link></div></Reveal>)}</div><p className="fineprint centered">Final specifications, crop availability and packing are confirmed before shipment. *Container quantities are indicative.</p></div></section>
+    <section className="section container"><Reveal className="section-heading centered"><div className="eyebrow">THE AKM ADVANTAGE</div><h2>A dependable partner.<br /><em>From the ground up.</em></h2></Reveal><div className="strength-grid">{strengths.map(({icon:Icon,title,text},i)=><Reveal className="strength-card" key={title} delay={i*.08}><div className="feature-top"><span className="icon-box"><Icon size={29} strokeWidth={1.5}/></span><span className="muted-number">0{i+1}</span></div><h3>{title}</h3><p>{text}</p></Reveal>)}</div></section>
+    <section className="origin-section" id="origin"><Photo src={images.field} alt="Rows of green crops across an agricultural landscape"/><div className="origin-overlay"/><div className="container origin-content"><Reveal><div className="eyebrow light"><span className="tiny-line"/> OUR ORIGIN</div><h2>Sourced in Pakistan.<br /><em>Connected to the world.</em></h2><p>Local supply knowledge meets international ambition. From sourcing through export preparation, we bring your requirements together in Karachi, Pakistan’s commercial gateway.</p><a href="#global-reach" className="button gold">Explore our export support <ArrowUpRight size={18}/></a></Reveal><div className="origin-note"><MapPin size={28} strokeWidth={1.4}/><div><span>OUR EXPORT BASE</span><h3>Karachi, Pakistan</h3><p>Local roots. International outlook.</p></div></div></div></section>
+    <section className="section container quality-grid" id="quality"><Reveal className="quality-intro"><div className="eyebrow"><span className="tiny-line"/> QUALITY YOU CAN VERIFY</div><h2>Confidence in<br /><em>every detail.</em></h2><p>Quality starts with understanding what you need. We agree product parameters, packing and verification requirements before commercial finalization.</p><div className="quality-note"><ShieldCheck size={26}/><p>Samples, current photographs and inspection information available upon request.</p></div><a className="text-link" href="#quote">Discuss your specifications <ArrowUpRight size={18}/></a></Reveal><div className="process-list">{steps.map(({icon:Icon,title,text},i)=><Reveal className="process-step" key={title} delay={i*.06}><span className="step-number">0{i+1}</span><div><h3>{title}</h3><p>{text}</p></div><Icon size={27} strokeWidth={1.3}/></Reveal>)}</div></section>
+    <section className="export-section section" id="global-reach"><div className="container"><Reveal className="section-heading split-heading"><div><div className="eyebrow"><span className="tiny-line"/> BUILT AROUND YOUR SHIPMENT</div><h2>Your requirements.<br /><em>Our export focus.</em></h2></div><p>Practical support for importers, distributors,<br />processors and commodity buyers.<br />Let’s work out the details together.</p></Reveal><div className="export-grid"><Reveal className="export-intro"><Ship size={44} strokeWidth={1}/><h3>From inquiry<br />to destination.</h3><p>FOB, CFR or CIF terms can be discussed according to your port, freight conditions and commercial agreement.</p><a href="#quote" className="text-link">Plan your shipment <ArrowUpRight size={18}/></a></Reveal><div className="export-detail"><PackageCheck/><h3>Flexible packaging</h3><p>25 kg / 50 kg PP bags, or buyer-specific packing by agreement. Bulk maize where suitable.</p></div><div className="export-detail"><Wheat/><h3>Container loading</h3><dl><div><dt>Sesame seeds</dt><dd>18–20 MT</dd></div><div><dt>Yellow maize</dt><dd>22–24 MT</dd></div></dl><span className="fineprint">Indicative quantity per 20ft container.</span></div><div className="export-detail"><FileCheck2/><h3>Documentation support</h3><p>Commercial, shipping, origin and inspection documents as required by your transaction and destination.</p></div></div><p className="fineprint">Loading varies with packing, density and payload limits. Required certifications, inspections and destination-country requirements must be agreed before order confirmation.</p></div></section>
+    <section className="cta-section"><div className="container"><div><div className="eyebrow light">LET’S GROW TOGETHER</div><h2>Your next opportunity<br />starts with <em>a conversation.</em></h2></div><a href="#quote" className="button gold">Request a commercial quote <ArrowUpRight size={19}/></a></div><Wheat className="cta-wheat" strokeWidth={.5} aria-hidden="true"/></section>
+    <section className="section container faq-grid" id="faq"><Reveal><div className="eyebrow"><span className="tiny-line"/> GOOD QUESTIONS. CLEAR ANSWERS.</div><h2>A little clarity,<br /><em>before we begin.</em></h2><p>What international buyers often ask us.</p><a href="#quote" className="text-link">Have a different question? <ArrowUpRight size={18}/></a></Reveal><div className="faqs">{faqs.map(([q,a])=><details key={q}><summary>{q}<span className="faq-plus" aria-hidden="true">+</span></summary><p>{a}</p></details>)}</div></section>
+    <section className="quote-section section" id="quote"><div className="container quote-grid"><Reveal><div className="eyebrow"><span className="tiny-line"/> YOUR NEXT SHIPMENT STARTS HERE</div><h2>Let’s talk<br /><em>good business.</em></h2><p>Tell us what you need and where you need it delivered. Prepare your requirements for a product availability and commercial quotation discussion.</p><div className="quote-promises"><span><Check/> Buyer-specific specifications</span><span><Check/> Flexible packing options</span><span><Check/> Practical export support</span></div><div className="quote-contact"><h3>Contact our export team</h3><ContactDetails/></div></Reveal><QuoteForm/></div></section>
+    <div className="closing-note container"><Handshake size={23}/><span>Good products. Clear communication. Lasting relationships.</span></div>
+  </main>;
 }
