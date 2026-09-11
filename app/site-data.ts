@@ -2,10 +2,16 @@ export const contact = {
   email: "contact@akmenterprises.info",
   phone: "+92 300 8375998",
   phoneHref: "tel:+923008375998",
+  whatsappHref: "https://wa.me/923008375998",
   address: "Shop #1, Nargis Tower, Gulistan-e-Johar, Block #10, next to Hascol Petrol Pump, Karachi",
 };
 
 export const images = {
+  cornfield: "https://images.unsplash.com/photo-1594117782204-5c398aa0e330?auto=format&fit=crop&w=1800&q=85",
+  containers: "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?auto=format&fit=crop&w=1800&q=85",
+  ship: "https://images.unsplash.com/photo-1724597500306-a4cbb7d1324e?auto=format&fit=crop&w=2000&q=85",
+  inspection: "https://images.unsplash.com/photo-1721355007794-16b3591c8d8d?auto=format&fit=crop&w=1400&q=85",
+  maizeHarvest: "https://images.unsplash.com/photo-1690123405642-f759ffc4f028?auto=format&fit=crop&w=1400&q=85",
   field: "https://images.unsplash.com/photo-1655131468751-c4210f1c4c5e?auto=format&fit=crop&w=2200&q=85",
   sesame: "https://upload.wikimedia.org/wikipedia/commons/9/97/Sesame_Seeds_-_NIAID.jpg",
   corn: "https://images.unsplash.com/photo-1635843107983-264f83647ba3?auto=format&fit=crop&w=1200&q=85",

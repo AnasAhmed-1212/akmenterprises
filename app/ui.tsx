@@ -2,6 +2,7 @@
 import { useState, type ReactNode, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { Sprout, ArrowUpRight, Menu, X, ChevronDown, MapPin, Phone, ArrowRight, Download, Check, Copy, Mail } from "lucide-react";
 import { contact } from "./site-data";
@@ -23,11 +24,48 @@ export function ContactDetails(){
   </address>;
 }
 
-export function Header(){
-  const [open,setOpen]=useState(false);
-  return <><a className="skip-link" href="#main-content">Skip to content</a><div className="topbar"><div className="container"><a className="header-email" href={`mailto:${contact.email}`}><Mail size={13}/>{contact.email}</a><span className="header-tagline">Rooted in quality. Growing through trust.</span><a className="header-phone" href={contact.phoneHref}><Phone size={13}/>{contact.phone}</a></div></div><header className="site-header"><div className="container nav-row"><Brand/><nav className={open?"main-nav is-open":"main-nav"} aria-label="Main navigation" onClick={(e)=>{if((e.target as HTMLElement).closest("a"))setOpen(false);}}><Link href="/">Home</Link><Link href="/#about">About us</Link><details className="nav-dropdown"><summary>Our products <ChevronDown size={13}/></summary><div><Link href="/products/sesame-seeds">Natural Sesame Seeds</Link><Link href="/products/yellow-maize">Yellow Corn / Maize</Link></div></details><Link href="/#origin">Our origin</Link><Link href="/#quality">Quality</Link><Link href="/#global-reach">Global reach</Link></nav><Link href="/#quote" className="button nav-cta">Get a quote <ArrowUpRight size={17}/></Link><button className="menu-button" aria-label={open?"Close menu":"Open menu"} aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div></header></>;
+export function Header() {
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
+  const navLink = (href: string, label: string) => <Link href={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>;
+  return <>
+    <a className="skip-link" href="#main-content">Skip to content</a>
+    <div className="topbar"><div className="container">
+      <a className="header-email" href={`mailto:${contact.email}`}><Mail size={13}/>{contact.email}</a>
+      <span className="header-tagline">Rooted in quality. Growing through trust.</span>
+      <a className="header-phone" href={contact.phoneHref}><Phone size={13}/>{contact.phone}</a>
+    </div></div>
+    <header className="site-header"><div className="container nav-row">
+      <Brand/>
+      <nav className={open ? "main-nav is-open" : "main-nav"} aria-label="Main navigation" onClick={event => {
+        const anchor = (event.target as HTMLElement).closest("a");
+        if (anchor) {
+          setOpen(false);
+          event.currentTarget.querySelectorAll("details[open]").forEach(detail => detail.removeAttribute("open"));
+        }
+      }}>
+        {navLink("/", "Home")}
+        {navLink("/about", "About us")}
+        <details className="nav-dropdown"><summary className={pathname.startsWith("/products") ? "active-menu" : ""}>Our products <ChevronDown size={13}/></summary><div>
+          {navLink("/products", "All products")}
+          {navLink("/products/sesame-seeds", "Natural Sesame Seeds")}
+          {navLink("/products/yellow-maize", "Yellow Corn / Maize")}
+        </div></details>
+        {navLink("/origin", "Our origin")}
+        {navLink("/quality", "Quality")}
+        {navLink("/global-reach", "Global reach")}
+        <details className="nav-dropdown"><summary className={["/export-documentation", "/faq"].includes(pathname) ? "active-menu" : ""}>Buyer resources <ChevronDown size={13}/></summary><div>
+          {navLink("/export-documentation", "Export & documentation")}
+          {navLink("/faq", "Frequently asked questions")}
+          {navLink("/contact", "Contact our team")}
+        </div></details>
+      </nav>
+      <Link href="/contact" className="button nav-cta">Get a quote <ArrowUpRight size={17}/></Link>
+      <button className="menu-button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X/> : <Menu/>}</button>
+    </div></header>
+  </>;
 }
-export function Footer(){return <footer className="footer"><div className="container footer-grid"><div className="footer-about"><Brand/><p>Pakistan’s agricultural goodness,<br/>connected to your world.</p><ContactDetails/></div><div><h4>Explore AKM</h4><Link href="/#about">About us</Link><Link href="/#origin">Our origin</Link><Link href="/#quality">Our approach to quality</Link><Link href="/#global-reach">Global reach</Link></div><div><h4>Our products</h4><Link href="/products/sesame-seeds">Natural Sesame Seeds</Link><Link href="/products/yellow-maize">Yellow Corn / Maize</Link><Link href="/#global-reach">Packing & documentation</Link><Link href="/#faq">Frequently asked questions</Link></div><div className="footer-inquiry"><h4>Let’s grow together</h4><p>Tell us your product, quantity and destination. Let’s start a conversation.</p><Link href="/#quote" className="footer-quote">Make an inquiry <ArrowUpRight size={18}/></Link></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AKM Enterprises. All rights reserved.</span><details className="photo-credits"><summary>Photography credits</summary><p>Representative imagery: <a href="https://unsplash.com/photos/sKpbVoNa9v8" target="_blank" rel="noreferrer">James Baltz / Unsplash</a>; <a href="https://unsplash.com/photos/KtD0STmOJIA" target="_blank" rel="noreferrer">engin akyurt / Unsplash</a>; <a href="https://commons.wikimedia.org/wiki/File:Sesame_Seeds_-_NIAID.jpg" target="_blank" rel="noreferrer">NIAID / Wikimedia Commons</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noreferrer">CC BY 2.0</a>, cropped to fit). Images illustrate commodities and agriculture; they are not AKM shipment or facility photographs.</p></details><span>PAKISTAN ORIGIN · GLOBAL OUTLOOK</span></div></footer>;}
+export function Footer(){return <footer className="footer"><div className="container footer-grid"><div className="footer-about"><Brand/><p>Pakistan’s agricultural goodness,<br/>connected to your world.</p><ContactDetails/></div><div><h4>Explore AKM</h4><Link href="/about">About us</Link><Link href="/origin">Our origin</Link><Link href="/quality">Our approach to quality</Link><Link href="/global-reach">Global reach</Link></div><div><h4>Our products</h4><Link href="/products/sesame-seeds">Natural Sesame Seeds</Link><Link href="/products/yellow-maize">Yellow Corn / Maize</Link><Link href="/export-documentation">Packing & documentation</Link><Link href="/faq">Frequently asked questions</Link></div><div className="footer-inquiry"><h4>Let’s grow together</h4><p>Tell us your product, quantity and destination. Let’s start a conversation.</p><Link href="/contact" className="footer-quote">Make an inquiry <ArrowUpRight size={18}/></Link></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AKM Enterprises. All rights reserved.</span><details className="photo-credits"><summary>Photography credits</summary><p>Representative imagery: <a href="https://unsplash.com/photos/gmsiVT5sfl0" target="_blank" rel="noreferrer">Lukasz Szmigiel / Unsplash</a>; <a href="https://unsplash.com/photos/tjX_sniNzgQ" target="_blank" rel="noreferrer">Frank McKenna / Unsplash</a>; <a href="https://unsplash.com/photos/0A7YwYhZhWw" target="_blank" rel="noreferrer">Bent Van Aeken / Unsplash</a>; <a href="https://unsplash.com/photos/fS6oRcdiIis" target="_blank" rel="noreferrer">Kelly Chiang / Unsplash</a>; <a href="https://unsplash.com/photos/5NPk8x7VyLQ" target="_blank" rel="noreferrer">Amanda Pettit / Unsplash</a>; <a href="https://unsplash.com/photos/sKpbVoNa9v8" target="_blank" rel="noreferrer">James Baltz / Unsplash</a>; <a href="https://unsplash.com/photos/KtD0STmOJIA" target="_blank" rel="noreferrer">engin akyurt / Unsplash</a>; <a href="https://commons.wikimedia.org/wiki/File:Sesame_Seeds_-_NIAID.jpg" target="_blank" rel="noreferrer">NIAID / Wikimedia Commons</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noreferrer">CC BY 2.0</a>, cropped to fit). Images illustrate commodities and agriculture; they are not AKM shipment or facility photographs.</p></details><span>PAKISTAN ORIGIN · GLOBAL OUTLOOK</span></div></footer>;}
 export function QuoteForm(){
   const [inquiry,setInquiry]=useState("");const [copied,setCopied]=useState(false);const [copyError,setCopyError]=useState(false);const email=contact.email;
   function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const data=new FormData(e.currentTarget);setInquiry("AKM ENTERPRISES — COMMERCIAL INQUIRY\n\n"+Array.from(data.entries()).filter(([,value])=>String(value).trim()).map(([key,value])=>`${key}: ${value}`).join("\n"));setCopied(false);}
