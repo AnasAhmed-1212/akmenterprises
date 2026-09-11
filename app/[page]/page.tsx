@@ -14,7 +14,7 @@ export async function generateMetadata({params}:{params:Promise<{page:string}>})
   const {page}=await params;
   if(!isInformationPage(page))return {title:"Page not found"};
   const info=informationPages[page];
-  return {title:info.label,description:info.description,openGraph:{title:`${info.label} | AKM Enterprises`,description:info.description}};
+  return {title:info.seoTitle,description:info.seoDescription,alternates:{canonical:`/${page}`},openGraph:{title:info.seoTitle,description:info.seoDescription,url:`/${page}`,type:"website"}};
 }
 
 export default async function Page({params}:{params:Promise<{page:string}>}) {

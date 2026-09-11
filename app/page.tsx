@@ -1,8 +1,15 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowUpRight, ArrowRight, Check, Sprout, ShieldCheck, PackageCheck, Ship, MapPin, Globe2, Wheat, MoveDown, Handshake } from "lucide-react";
 import { Reveal, Photo } from "./ui";
 import { HeroSlideshow } from "./hero-slideshow";
 import { products, images } from "./site-data";
+
+export const metadata: Metadata = {
+  description: "AKM Enterprises exports Pakistan-origin Natural Sesame Seeds and Yellow Corn / Maize. Explore product specifications, packing options and export support from Karachi.",
+  alternates: { canonical: "/" },
+  openGraph: { url: "/", title: "AKM Enterprises | Sesame Seeds & Maize Exporter Pakistan", description: "Pakistan-origin Natural Sesame Seeds and Yellow Corn / Maize with clear specifications and dependable export support." },
+};
 
 const strengths = [
   { icon: Sprout, title: "Rooted in Pakistan", text: "Carefully sourced sesame seeds and maize, with local supply knowledge and a clear focus on origin." },

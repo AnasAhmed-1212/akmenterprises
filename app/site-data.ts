@@ -1,3 +1,5 @@
+export const siteUrl = "https://akmenterprises.info";
+
 export const contact = {
   email: "contact@akmenterprises.info",
   phone: "+92 300 8375998",

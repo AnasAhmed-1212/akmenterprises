@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
-import { Sprout, ArrowUpRight, Menu, X, ChevronDown, MapPin, Phone, ArrowRight, Download, Check, Copy, Mail } from "lucide-react";
+import { Sprout, ArrowUpRight, Menu, X, ChevronDown, MapPin, Phone, ArrowRight, Download, Check, Mail } from "lucide-react";
 import { contact } from "./site-data";
 
 export function Photo({src, alt, className = "", priority = false}: {src:string;alt:string;className?:string;priority?:boolean}) {
@@ -66,10 +66,83 @@ export function Header() {
   </>;
 }
 export function Footer(){return <footer className="footer"><div className="container footer-grid"><div className="footer-about"><Brand/><p>Pakistan’s agricultural goodness,<br/>connected to your world.</p><ContactDetails/></div><div><h4>Explore AKM</h4><Link href="/about">About us</Link><Link href="/origin">Our origin</Link><Link href="/quality">Our approach to quality</Link><Link href="/global-reach">Global reach</Link></div><div><h4>Our products</h4><Link href="/products/sesame-seeds">Natural Sesame Seeds</Link><Link href="/products/yellow-maize">Yellow Corn / Maize</Link><Link href="/export-documentation">Packing & documentation</Link><Link href="/faq">Frequently asked questions</Link></div><div className="footer-inquiry"><h4>Let’s grow together</h4><p>Tell us your product, quantity and destination. Let’s start a conversation.</p><Link href="/contact" className="footer-quote">Make an inquiry <ArrowUpRight size={18}/></Link></div></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} AKM Enterprises. All rights reserved.</span><details className="photo-credits"><summary>Photography credits</summary><p>Representative imagery: <a href="https://unsplash.com/photos/gmsiVT5sfl0" target="_blank" rel="noreferrer">Lukasz Szmigiel / Unsplash</a>; <a href="https://unsplash.com/photos/tjX_sniNzgQ" target="_blank" rel="noreferrer">Frank McKenna / Unsplash</a>; <a href="https://unsplash.com/photos/0A7YwYhZhWw" target="_blank" rel="noreferrer">Bent Van Aeken / Unsplash</a>; <a href="https://unsplash.com/photos/fS6oRcdiIis" target="_blank" rel="noreferrer">Kelly Chiang / Unsplash</a>; <a href="https://unsplash.com/photos/5NPk8x7VyLQ" target="_blank" rel="noreferrer">Amanda Pettit / Unsplash</a>; <a href="https://unsplash.com/photos/sKpbVoNa9v8" target="_blank" rel="noreferrer">James Baltz / Unsplash</a>; <a href="https://unsplash.com/photos/KtD0STmOJIA" target="_blank" rel="noreferrer">engin akyurt / Unsplash</a>; <a href="https://commons.wikimedia.org/wiki/File:Sesame_Seeds_-_NIAID.jpg" target="_blank" rel="noreferrer">NIAID / Wikimedia Commons</a> (<a href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noreferrer">CC BY 2.0</a>, cropped to fit). Images illustrate commodities and agriculture; they are not AKM shipment or facility photographs.</p></details><span>PAKISTAN ORIGIN · GLOBAL OUTLOOK</span></div></footer>;}
-export function QuoteForm(){
-  const [inquiry,setInquiry]=useState("");const [copied,setCopied]=useState(false);const [copyError,setCopyError]=useState(false);const email=contact.email;
-  function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();const data=new FormData(e.currentTarget);setInquiry("AKM ENTERPRISES — COMMERCIAL INQUIRY\n\n"+Array.from(data.entries()).filter(([,value])=>String(value).trim()).map(([key,value])=>`${key}: ${value}`).join("\n"));setCopied(false);}
-  function download(){const url=URL.createObjectURL(new Blob([inquiry],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download="AKM-commercial-inquiry.txt";a.click();URL.revokeObjectURL(url);}
-  async function copy(){try{await navigator.clipboard.writeText(inquiry);setCopied(true);setCopyError(false);}catch{setCopyError(true);}}
-  return <div className="quote-form-card"><div className="form-heading"><h3>Your buying requirements</h3><span>LET’S GET THE DETAILS RIGHT</span></div><form onSubmit={submit} onChange={()=>{if(inquiry)setInquiry("");}}><div className="form-grid"><label>Full name *<input required name="Full name" autoComplete="name" placeholder="Your full name" maxLength={120}/></label><label>Company name *<input required name="Company" autoComplete="organization" placeholder="Your company" maxLength={160}/></label><label>Email address *<input required type="email" name="Email" autoComplete="email" placeholder="you@company.com" maxLength={200}/></label><label>Phone / WhatsApp<input type="tel" name="Phone" autoComplete="tel" placeholder="Include country code" maxLength={50}/></label><label>Product *<select required name="Product" defaultValue=""><option value="" disabled>Select a product</option><option>Natural Sesame Seeds</option><option>Yellow Corn / Maize</option><option>Both products</option></select></label><label>Quantity (metric tonnes) *<input required type="number" min="0.01" step="0.01" name="Quantity (MT)" placeholder="e.g. 20"/></label><label>Destination country *<input required name="Country" autoComplete="country-name" placeholder="Destination country" maxLength={100}/></label><label>Destination port *<input required name="Port" placeholder="e.g. Jebel Ali" maxLength={120}/></label></div><details className="form-options"><summary>Packing, shipment & additional requirements <ChevronDown size={16}/></summary><div className="form-grid"><label>Packing preference<select name="Packing"><option>Discuss with AKM</option><option>25 kg PP bags</option><option>50 kg PP bags</option><option>Bulk maize</option><option>Buyer-specific packing</option></select></label><label>Preferred Incoterm<select name="Incoterm"><option>To be discussed</option><option>FOB</option><option>CFR</option><option>CIF</option></select></label><label>Target shipment date<input type="date" name="Target shipment date"/></label></div><label>Specifications & additional message<textarea name="Message" rows={3} maxLength={3000} placeholder="Quality parameters, inspection requirements, packing details…"/></label></details><button type="submit" className="button form-submit">Prepare my inquiry <ArrowRight size={18}/></button><p className="form-note">Prepare your requirements, then open a prefilled email to contact@akmenterprises.info. You send the message from your email app.</p></form>{inquiry&&<div className="inquiry-result" role="status"><strong><Check size={17}/> Your inquiry is ready to share</strong><p>Open an email to AKM with your requirements, or save a copy. Send the message from your email app to complete your inquiry.</p><pre>{inquiry}</pre><div className="actions"><button type="button" onClick={download} className="button small"><Download size={16}/> Download</button><button type="button" onClick={copy} className="button small outline"><Copy size={16}/>{copied?"Copied!":"Copy inquiry"}</button>{email&&<a className="button small" href={`mailto:${email}?subject=${encodeURIComponent("AKM commercial inquiry")}&body=${encodeURIComponent(inquiry)}`}><Mail size={16}/>Open email</a>}</div>{copyError&&<p>Copy is unavailable in this browser. Please use Download.</p>}</div>}</div>;
+export function QuoteForm() {
+  const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [message, setMessage] = useState("");
+  const [inquiry, setInquiry] = useState("");
+
+  function createInquiry(data: FormData) {
+    const labels = ["Full name", "Company", "Email", "Phone", "Product", "Quantity (MT)", "Country", "Port", "Packing", "Incoterm", "Target shipment date", "Message"];
+    return "AKM ENTERPRISES — COMMERCIAL INQUIRY\n\n" + labels
+      .map(label => [label, String(data.get(label) ?? "").trim()] as const)
+      .filter(([, value]) => value)
+      .map(([label, value]) => label + ": " + value)
+      .join("\n");
+  }
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const preparedInquiry = createInquiry(data);
+    setState("sending");
+    setMessage("");
+    setInquiry(preparedInquiry);
+
+    try {
+      const response = await fetch("/api/inquiry", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(data)),
+      });
+      const result = await response.json().catch(() => null);
+      if (!response.ok) throw new Error(result?.error ?? "We could not send your inquiry. Please try again.");
+      setState("sent");
+      setMessage("Thank you. Your inquiry has been sent to AKM Enterprises. We will review it and respond with the relevant product and commercial information.");
+      form.reset();
+    } catch (error) {
+      setState("error");
+      setMessage(error instanceof Error ? error.message : "We could not send your inquiry. Please call or email us directly.");
+    }
+  }
+
+  function download() {
+    const url = URL.createObjectURL(new Blob([inquiry], { type: "text/plain;charset=utf-8" }));
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "AKM-commercial-inquiry.txt";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  return <div className="quote-form-card">
+    <div className="form-heading"><h3>Your buying requirements</h3><span>LET’S GET THE DETAILS RIGHT</span></div>
+    <form onSubmit={submit}>
+      <input className="honeypot" name="Website" tabIndex={-1} autoComplete="off" aria-hidden="true"/>
+      <div className="form-grid">
+        <label>Full name *<input required name="Full name" autoComplete="name" placeholder="Your full name" maxLength={120}/></label>
+        <label>Company name *<input required name="Company" autoComplete="organization" placeholder="Your company" maxLength={160}/></label>
+        <label>Email address *<input required type="email" name="Email" autoComplete="email" placeholder="you@company.com" maxLength={200}/></label>
+        <label>Phone / WhatsApp<input type="tel" name="Phone" autoComplete="tel" placeholder="Include country code" maxLength={50}/></label>
+        <label>Product *<select required name="Product" defaultValue=""><option value="" disabled>Select a product</option><option>Natural Sesame Seeds</option><option>Yellow Corn / Maize</option><option>Both products</option></select></label>
+        <label>Quantity (metric tonnes) *<input required type="number" min="0.01" step="0.01" name="Quantity (MT)" placeholder="e.g. 20"/></label>
+        <label>Destination country *<input required name="Country" autoComplete="country-name" placeholder="Destination country" maxLength={100}/></label>
+        <label>Destination port *<input required name="Port" placeholder="e.g. Jebel Ali" maxLength={120}/></label>
+      </div>
+      <details className="form-options"><summary>Packing, shipment & additional requirements <ChevronDown size={16}/></summary>
+        <div className="form-grid">
+          <label>Packing preference<select name="Packing"><option>Discuss with AKM</option><option>25 kg PP bags</option><option>50 kg PP bags</option><option>Bulk maize</option><option>Buyer-specific packing</option></select></label>
+          <label>Preferred Incoterm<select name="Incoterm"><option>To be discussed</option><option>FOB</option><option>CFR</option><option>CIF</option></select></label>
+          <label>Target shipment date<input type="date" name="Target shipment date"/></label>
+        </div>
+        <label>Specifications & additional message<textarea name="Message" rows={3} maxLength={3000} placeholder="Quality parameters, inspection requirements, packing details…"/></label>
+      </details>
+      <button type="submit" className="button form-submit" disabled={state === "sending"} aria-busy={state === "sending"}>
+        {state === "sending" ? "Sending your inquiry…" : "Send inquiry"} <ArrowRight size={18}/>
+      </button>
+      <p className="form-note">Your request is sent securely to our export team. We use it only to respond to your inquiry.</p>
+    </form>
+    {state === "sent" && <div className="form-success" role="status"><Check size={19}/><p>{message}</p></div>}
+    {state === "error" && <div className="form-error" role="alert"><p>{message}</p><div className="actions"><a href={"mailto:" + contact.email + "?subject=" + encodeURIComponent("AKM commercial inquiry") + "&body=" + encodeURIComponent(inquiry)} className="button small"><Mail size={16}/> Email your inquiry</a><button type="button" onClick={download} className="button small outline"><Download size={16}/> Download a copy</button></div></div>}
+  </div>;
 }
